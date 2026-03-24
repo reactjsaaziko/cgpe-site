@@ -1,0 +1,181 @@
+/* Image Optimization Styles */
+
+/* Lazy loading placeholder */
+.lazy-image {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Image fade-in animation */
+.image-fade-in {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.image-fade-in.loaded {
+  opacity: 1;
+}
+
+/* Responsive image container */
+.responsive-image-container {
+  position: relative;
+  overflow: hidden;
+  background-color: #f5f5f5;
+}
+
+.responsive-image-container::before {
+  content: '';
+  display: block;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+}
+
+.responsive-image-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Aspect ratio containers */
+.aspect-ratio-16-9 {
+  aspect-ratio: 16 / 9;
+}
+
+.aspect-ratio-4-3 {
+  aspect-ratio: 4 / 3;
+}
+
+.aspect-ratio-1-1 {
+  aspect-ratio: 1 / 1;
+}
+
+.aspect-ratio-3-2 {
+  aspect-ratio: 3 / 2;
+}
+
+/* Image loading spinner */
+.image-loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Error state for images */
+.image-error {
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  font-size: 14px;
+  min-height: 100px;
+}
+
+.image-error svg {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+/* Blur to clear effect */
+.image-blur-to-clear {
+  filter: blur(5px);
+  transition: filter 0.3s ease-in-out;
+}
+
+.image-blur-to-clear.loaded {
+  filter: blur(0);
+}
+
+/* Progressive image loading */
+.progressive-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.progressive-image .placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+.progressive-image .main-image {
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.progressive-image .main-image.loaded {
+  opacity: 1;
+}
+
+/* High DPI display optimization */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .high-dpi-image {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .image-fade-in,
+  .image-blur-to-clear,
+  .progressive-image .main-image {
+    transition: none;
+  }
+  
+  .lazy-image,
+  .progressive-image .placeholder {
+    animation: none;
+  }
+  
+  .image-loading-spinner {
+    animation: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .image-loading-spinner,
+  .progressive-image .placeholder {
+    display: none;
+  }
+  
+  .responsive-image-container img {
+    position: static;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+  }
+}

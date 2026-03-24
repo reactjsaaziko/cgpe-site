@@ -1,0 +1,130 @@
+/* Remove cursor pointer from all interactive elements */
+
+/* Override Tailwind's cursor-pointer class */
+.cursor-pointer,
+.cursor-pointer:hover,
+button,
+button:hover,
+[role="button"],
+[role="button"]:hover,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="file"],
+select,
+textarea:focus,
+a,
+a:hover,
+label,
+label:hover {
+    cursor: default !important;
+}
+
+/* Specifically target common interactive elements */
+.hover\:cursor-pointer:hover {
+    cursor: default !important;
+}
+
+/* Remove pointer cursor from form elements */
+input:not([type="text"]):not([type="email"]):not([type="password"]):not([type="number"]):not([type="tel"]):not([type="url"]):not([type="search"]) {
+    cursor: default !important;
+}
+
+/* Remove pointer cursor from clickable divs and spans */
+div[onclick],
+span[onclick],
+div[role="button"],
+span[role="button"] {
+    cursor: default !important;
+}
+
+/* Remove pointer cursor from navigation elements */
+nav a,
+nav button,
+.nav-link {
+    cursor: default !important;
+}
+
+/* Remove pointer cursor from card elements that are clickable */
+.card:hover,
+.hover\:shadow-lg:hover,
+.hover\:shadow-xl:hover {
+    cursor: default !important;
+}
+
+/* Remove pointer cursor from all elements with click handlers */
+[onClick] {
+    cursor: default !important;
+}
+
+/* Remove text cursor from ALL elements including text inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+textarea,
+input,
+textarea:focus,
+input:focus {
+    cursor: default !important;
+}
+
+/* Remove text cursor from all text elements */
+p, span, div, h1, h2, h3, h4, h5, h6, 
+label, li, td, th, 
+.text-cursor,
+[contenteditable],
+[contenteditable="true"] {
+    cursor: default !important;
+}
+
+/* Disable text selection cursor */
+* {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    cursor: default !important;
+}
+
+/* Remove text selection highlighting */
+*::selection {
+    background: transparent !important;
+}
+
+*::-moz-selection {
+    background: transparent !important;
+}
+
+/* Prevent text cursor on focus */
+*:focus {
+    cursor: default !important;
+    outline: none !important;
+}
+
+/* Remove text cursor from specific text-related elements */
+code, pre, kbd, samp {
+    cursor: default !important;
+    user-select: none !important;
+}
+
+/* Remove text cursor from contenteditable elements */
+[contenteditable="true"]:focus,
+[contenteditable]:focus {
+    cursor: default !important;
+}
+
+/* Override any remaining text cursors */
+.cursor-text,
+.text-cursor {
+    cursor: default !important;
+}
+
+/* Ensure disabled elements have default cursor */
+:disabled,
+[disabled] {
+    cursor: default !important;
+}
