@@ -97,7 +97,7 @@ export default function Footer() {
         {/* Logo and columns */}
         <div className="flex flex-col items-center md:items-start md:w-1/4">
           <img
-            src="./assets/images/C.G3.png" // Replace with your actual logo path
+            src="/assets/images/C.G3.png"
             alt="C.G. Patel House of Insurance"
             className="w-[200px] mb-3 rounded-bl-3xl w-full  bg-white p-8"
           />

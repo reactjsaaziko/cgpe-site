@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { InvestmentProvider } from './context/InvestmentContext';
 import { UserDataProvider } from './context/UserDataContext';
+import { LanguageProvider } from './context/LanguageContext';
 import ImagePreloader from './components/common/ImagePreloader';
 import PerformanceMonitor from './components/common/PerformanceMonitor';
 import './index.css';
@@ -138,7 +139,14 @@ const WhatsAppQRDemo = React.lazy(() => import('./components/pages/WhatsAppQRDem
 const CGPEDoctorAdvisor = React.lazy(() => import('./components/pages/CGPEDoctorAdvisor'));
 const DoctorConsultation = React.lazy(() => import('./components/pages/DoctorConsultation'));
 const ComingSoon = React.lazy(() => import('./components/pages/ComingSoon'));
-const Community = React.lazy(() => import('./components/pages/Community'));
+const ForCommunityHub = React.lazy(() => import('./components/pages/ForCommunityHub'));
+const CommunityEventDetail = React.lazy(() => import('./components/pages/CommunityEventDetail'));
+const CommunityKesariyaNavratri = React.lazy(() => import('./components/pages/CommunityKesariyaNavratri'));
+const CommunityRishikeshSaptah = React.lazy(() => import('./components/pages/CommunityRishikeshSaptah'));
+const CommunitySuratNavratri = React.lazy(() => import('./components/pages/CommunitySuratNavratri'));
+const CommunitySilvaMeditation1 = React.lazy(() => import('./components/pages/CommunitySilvaMeditation1'));
+const CommunitySilvaMeditation2 = React.lazy(() => import('./components/pages/CommunitySilvaMeditation2'));
+const Saptah = React.lazy(() => import('./components/pages/Saptah'));
 
 
 
@@ -183,6 +191,7 @@ function App() {
   return (
     <InvestmentProvider>
       <UserDataProvider>
+        <LanguageProvider>
         <BrowserRouter>
           <Toaster position="top-right" />
           <ImagePreloader />
@@ -194,10 +203,16 @@ function App() {
           <Route path="/" element={<InformationPage />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/awards" element={<Awards />} />
-          <Route path="/community" element={<Community />} />
+          <Route path="/community" element={<ForCommunityHub />} />
+          <Route path="/community/silva-meditation-session-1" element={<CommunitySilvaMeditation1 />} />
+          <Route path="/community/silva-meditation-session-2" element={<CommunitySilvaMeditation2 />} />
+          <Route path="/community/kesariya-navratri" element={<CommunityKesariyaNavratri />} />
+          <Route path="/community/surat-ac-dome-navratri" element={<CommunitySuratNavratri />} />
+          <Route path="/community/rishikesh-saptah" element={<Saptah />} />
+          <Route path="/community/:eventId" element={<CommunityEventDetail />} />
           <Route path="/newsroom" element={<Events />} />
           <Route path="/events" element={<Events />} />
-          <Route path="/kesariya-navratri" element={<KesariyaNavratri />} />
+          <Route path="/kesariya-navratris" element={<KesariyaNavratri />} />
           <Route path="/ankit-shah-session" element={<AnkitShahSession />} />
           <Route path="/amit-dave-session" element={<AmitDaveSession />} />
           <Route path="/white-coat-wealth-circle" element={<WhiteCoatWealthCircle />} />
@@ -291,6 +306,7 @@ function App() {
         </Routes>
           </Suspense>
         </BrowserRouter>
+        </LanguageProvider>
       </UserDataProvider>
     </InvestmentProvider>
   );

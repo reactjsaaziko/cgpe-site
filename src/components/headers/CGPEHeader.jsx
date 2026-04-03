@@ -18,7 +18,7 @@ const CGPEHeader = () => {
     if (pathname === '/contact') return 'Contact';
     if (pathname === '/services') return 'Our Services';
     if (pathname === '/awards') return 'Awards';
-    if (pathname === '/community') return 'For Community';
+    if (pathname === '/community' || pathname.startsWith('/community/')) return 'For Community';
     if (pathname === '/newsroom') return 'Newsroom';
     if (pathname === '/admin/login' || pathname === '/admin/dashboard') return 'For Advisor';
     if (pathname === '/portfolio') return 'Our Portfolio';
@@ -27,7 +27,7 @@ const CGPEHeader = () => {
     if (pathname === '/events' ||
         pathname === '/amit-dave-session' || 
         pathname === '/ankit-shah-session' || 
-        pathname === '/kesariya-navratri') {
+        pathname === '/kesariya-navratris') {
       return 'Newsroom';
     }
     
