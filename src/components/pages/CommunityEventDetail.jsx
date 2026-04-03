@@ -69,7 +69,7 @@ const CommunityEventDetail = () => {
 
           {/* Video */}
           <div className="ch-video-wrap">
-            <video controls className="ch-video" poster={silvaImage1}>
+            <video controls autoPlay muted playsInline className="ch-video" poster={silvaImage1} preload="auto">
               <source
                 src={
                   eventId === 'silva-meditation-session-2'
@@ -89,7 +89,7 @@ const CommunityEventDetail = () => {
             <div className="ch-gallery-grid">
               {galleryImages.map((img, i) => (
                 <div key={i} className="ch-gallery-item">
-                  <img src={img} alt={`${title} ${i + 1}`} className="ch-gallery-img" />
+                  <img src={img} alt={`${title} ${i + 1}`} className="ch-gallery-img" loading="lazy" decoding="async" />
                 </div>
               ))}
             </div>

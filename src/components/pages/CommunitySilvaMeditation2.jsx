@@ -16,14 +16,15 @@ import sm6 from '../../assets/2024sm6.png';
 import sm7 from '../../assets/2024sm7.png';
 import sm8 from '../../assets/2024sm8.png';
 import sm9 from '../../assets/2024sm9.png';
+import sm10 from '../../assets/2024sm10.jpeg';
 
-const galleryImages = [sm1, sm2, sm3, sm4, sm5, sm6, sm7, sm8, sm9];
+const galleryImages = [sm1, sm2, sm3, sm4, sm5, sm6, sm7, sm8, sm9, sm10];
 
 const CommunitySilvaMeditation2 = () => {
   const { language } = useLanguage();
   const videoRef = useRef(null);
-  const [playing, setPlaying] = useState(false);
-  const [muted, setMuted] = useState(false);
+  const [playing, setPlaying] = useState(true);
+  const [muted, setMuted] = useState(true);
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -98,6 +99,9 @@ const CommunitySilvaMeditation2 = () => {
               src={videoSrc}
               style={{ width: '100%', display: 'block', maxHeight: '480px', objectFit: 'cover' }}
               playsInline
+              autoPlay
+              muted
+              preload="auto"
               onEnded={() => setPlaying(false)}
             />
 
@@ -217,6 +221,8 @@ const CommunitySilvaMeditation2 = () => {
                 <img
                   src={img}
                   alt={`Silva Meditation 2024 moment ${i + 1}`}
+                  loading="lazy"
+                  decoding="async"
                   style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                 />
               </div>

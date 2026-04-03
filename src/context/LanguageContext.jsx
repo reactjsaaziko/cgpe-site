@@ -5,7 +5,7 @@ const LanguageContext = createContext(undefined);
 export const LanguageProvider = ({ children }) => {
   const [language, setLanguageState] = useState(() => {
     const saved = localStorage.getItem('cgpe_language');
-    return saved || 'en';
+    return saved || 'gu';
   });
 
   const setLanguage = (lang) => {

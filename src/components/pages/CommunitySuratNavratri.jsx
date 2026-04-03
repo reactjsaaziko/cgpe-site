@@ -60,7 +60,7 @@ const CommunitySuratNavratri = () => {
           <h3 className="ch-section-h3">Event Highlights</h3>
           <div className="ch-divider" style={{ width: '96px', marginBottom: '28px' }} />
           <div className="ch-video-wrap">
-            <video controls className="ch-video" poster={kn1}>
+            <video controls autoPlay muted playsInline className="ch-video" poster={kn1} preload="auto">
               <source src={knVideo} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
@@ -77,6 +77,8 @@ const CommunitySuratNavratri = () => {
                   src={img}
                   alt={`Surat AC Dome Navratri 2024 moment ${i + 1}`}
                   className="ch-kn-gallery-img"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             ))}

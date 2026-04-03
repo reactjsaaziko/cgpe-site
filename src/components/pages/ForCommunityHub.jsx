@@ -104,6 +104,7 @@ const ForCommunityHub = () => {
                   alt={t(event.titleKey, language)}
                   className="ch-event-img"
                   loading="lazy"
+                  decoding="async"
                 />
                 <div className="ch-event-overlay" />
               </div>

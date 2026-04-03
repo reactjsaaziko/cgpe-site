@@ -13,8 +13,8 @@ import videoSrc from '../../assets/2022sm.mp4';
 const CommunitySilvaMeditation1 = () => {
   const { language } = useLanguage();
   const videoRef = useRef(null);
-  const [playing, setPlaying] = useState(false);
-  const [muted, setMuted] = useState(false);
+  const [playing, setPlaying] = useState(true);
+  const [muted, setMuted] = useState(true);
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -89,6 +89,9 @@ const CommunitySilvaMeditation1 = () => {
               src={videoSrc}
               style={{ width: '100%', display: 'block', maxHeight: '480px', objectFit: 'cover' }}
               playsInline
+              autoPlay
+              muted
+              preload="auto"
               onEnded={() => setPlaying(false)}
             />
 
@@ -208,6 +211,8 @@ const CommunitySilvaMeditation1 = () => {
                 <img
                   src={img}
                   alt={`Silva Meditation 2022 moment ${i + 1}`}
+                  loading="lazy"
+                  decoding="async"
                   style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                 />
               </div>

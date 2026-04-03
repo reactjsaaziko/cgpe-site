@@ -27,12 +27,6 @@ const HeroSection = () => {
       <div className="sp-hero-om-bg">
         <PulsingOm className="sp-om-watermark" />
       </div>
-
-      <div className="sp-hero-feather-left"><PeacockFeatherIcon size={60} /></div>
-      <div className="sp-hero-feather-right"><ConchIcon size={50} /></div>
-
-      <div className="sp-hero-mandala"><MandalaSVG size={500} /></div>
-
       <div className="sp-hero-content">
         {/* Top */}
         <div className="sp-container sp-text-center">
@@ -51,7 +45,6 @@ const HeroSection = () => {
             <DiyaIcon size={18} className="sp-inline sp-ml-2" />
           </motion.span>
         </div>
-
         {/* Bottom */}
         <div className="sp-container sp-text-center sp-hero-bottom">
           <motion.h1

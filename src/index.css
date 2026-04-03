@@ -669,7 +669,7 @@ code {
 .ch-gradient-text {
   background: linear-gradient(135deg, var(--ch-primary), #fb923c);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-text-fill-color: #fb923c;
   background-clip: text;
 }
 
