@@ -1,0 +1,111 @@
+name: Backup to GitLab - CGPE
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cgpe-gitlab-backup-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+
+    steps:
+      - name: Back up this repository to the CGPE GitLab group
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+          GITLAB_GROUP: cgpe-backup-latest
+          GIT_TERMINAL_PROMPT: "0"
+        run: |
+          set -euo pipefail
+
+          if [[ -z "$GITLAB_TOKEN" ]]; then
+            echo "::error::Add the GITLAB_TOKEN secret in THIS GitHub repository."
+            exit 1
+          fi
+
+          # Read the source from the repository running this workflow.
+          # No fixed GitHub owner: CGPE repositories can use different accounts.
+          REPO_NAME="${GITHUB_REPOSITORY#*/}"
+          case "$REPO_NAME" in
+            cgpe-android|cgpe-backend|cgpe-front|cgpe-site)
+              ;;
+            *)
+              echo "::error::This workflow is only for the four CGPE repositories."
+              exit 1
+              ;;
+          esac
+
+          SOURCE_URL="https://github.com/${GITHUB_REPOSITORY}.git"
+          DEST_URL="https://gitlab.com/${GITLAB_GROUP}/${REPO_NAME}.git"
+          echo "Source: $SOURCE_URL"
+          echo "Destination: $DEST_URL"
+
+          # Keep credentials out of repository URLs and remove them on exit.
+          umask 077
+          trap 'rm -f "$HOME/.netrc"' EXIT
+          cat > "$HOME/.netrc" <<EOF
+          machine github.com
+          login x-access-token
+          password $GH_TOKEN
+          machine gitlab.com
+          login oauth2
+          password $GITLAB_TOKEN
+          EOF
+
+          # The matching GitLab project must already exist and be accessible.
+          if ! git ls-remote --refs "$DEST_URL" > /dev/null; then
+            echo "::error::Cannot access the GitLab project. Check its path and token permissions."
+            exit 1
+          fi
+
+          git clone --bare "$SOURCE_URL" backup.git
+          cd backup.git
+          git remote add gitlab "$DEST_URL"
+
+          # Capture the source branches/tags for verification after the push.
+          git for-each-ref --format='%(objectname) %(refname)' \
+            refs/heads refs/tags > expected.txt
+          if [[ ! -s expected.txt ]]; then
+            echo "::error::No source branches or tags found. Nothing was backed up."
+            exit 1
+          fi
+
+          # Preview first. Never force updates or delete GitLab-only branches.
+          REFS=('refs/heads/*:refs/heads/*' 'refs/tags/*:refs/tags/*')
+          git push --dry-run --atomic gitlab "${REFS[@]}"
+
+          # Transfer Git LFS objects, when present, before updating Git refs.
+          git lfs fetch --all origin
+          git -c lfs.url="${DEST_URL}/info/lfs" \
+              -c lfs.pushurl="${DEST_URL}/info/lfs" \
+              lfs push --all gitlab
+
+          # Update branches/tags together; request skipping push CI.
+          git push --atomic -o ci.skip -o integrations.skip_ci \
+            gitlab "${REFS[@]}"
+
+          # Check every copied branch and tag against the source snapshot.
+          git ls-remote --refs gitlab | \
+            awk '{print $1 " " $2}' > actual.txt
+          while IFS= read -r ref; do
+            if ! grep -Fxq -- "$ref" actual.txt; then
+              echo "::error::Branch or tag verification failed: $ref"
+              exit 1
+            fi
+          done < expected.txt
+
+          {
+            echo "## CGPE backup completed: $REPO_NAME"
+            echo "GitHub source: $GITHUB_REPOSITORY"
+            echo "GitLab destination: $GITLAB_GROUP/$REPO_NAME"
+            echo "All copied branches and tags match the GitHub source snapshot."
+            echo "The Git LFS transfer command completed successfully."
+          } >> "$GITHUB_STEP_SUMMARY"
